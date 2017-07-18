@@ -14,9 +14,50 @@ namespace WebApi02
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "",
+                url: "HomeMVC/MainPage",
+                defaults: new
+                {
+                    controller = "HomeMVC",
+                    action = "MainPage",
+                    
+                }
+            );
+            routes.MapRoute(
+               name: "",
+               url: "HomeMVC/Employees",
+               defaults: new
+               {
+                   controller = "HomeMVC",
+                   action = "Employees",
+
+               }
+           );
+            routes.MapRoute(
+              name: "regist",
+              url: "AdminEmployee/employeeRegistr",
+              defaults: new
+              {
+                  controller = "AdminEmployee",
+                  action = "employeeRegistr",
+              }
+          );
+            routes.MapRoute(
+              name: "",
+              url: "AdminEmployee/AddEmployee",
+              defaults: new
+              {
+                  controller = "AdminEmployee",
+                  action = "AddEmployee",
+              }
+          );
+            routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                url: "",
+                defaults: new
+                { controller = "HomeMVC",
+                    action = "MainPage",
+                }
             );
         }
     }

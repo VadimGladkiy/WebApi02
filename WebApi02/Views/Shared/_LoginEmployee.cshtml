@@ -1,0 +1,74 @@
+﻿
+<div id="" class="container-fluid">
+
+    <p class="flex-row-reverse card-header">
+        <label>user name </label>
+        <input id="usrName" type="text" />
+        <label>password</label>
+        <input id="usrPass" type="password" />
+        <input id="btnGetAll" type="button" value="Log In" />
+        <input id="btnCleaner" type="button" value="Log Out" />
+        @Html.RouteLink("registration", "regist")
+    </p>
+
+    <div class="container">
+        <ul id="list" class="col-md-8"></ul>
+    </div>
+</div> 
+<style>
+    
+</style>
+<script type="text/javascript">
+        jQuery(document).ready(function ()
+        {
+            var list = jQuery("#list");
+
+            jQuery("#btnGetAll").click(getData);
+            jQuery("#btnCleaner").click(clearList);
+
+        function getData()
+        {
+            var url = "/api/WebApiHome";
+            var Name = jQuery("#usrName").val();
+            var Pass = jQuery("#usrPass").val();
+            console.log(Name, Pass);
+            jQuery.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                headers: {
+                    'Authorization' : 'Basic ' + window.btoa(Name + ':'+ Pass)
+                },
+                success: function (data)
+                {
+                    list.empty();
+                    jQuery.each(data, function (index, val)
+                    {
+                        var note =
+                        val.Id + ' ' + val.first_name + ' ' + val.last_name+ ' '+
+                        + ' ' + val.salary + ' ' + val.gender
+                        + " is authorized";
+                        console.log(note);
+                        list.append('<li>' + note + '</li>');
+                    })
+                },
+                complete: function (jqXHR)
+                {
+                    if (jqXHR.status == 401) {
+                        list.empty();
+                        list.append('<li>' + jqXHR.status + ' : ' + jqXHR.statusText + '</li>');
+                    }
+                }
+            });
+
+        }
+
+        function clearList()
+        {
+            list.empty();
+        }
+    //    function GetAll() {
+    //    jQuery("#list").load("/api/WebApiHome");}
+
+        }); // end of ready func
+</script>

@@ -1,0 +1,102 @@
+﻿@using WebApi02.DAO;
+@model WebApi02.DAO.Employee
+<link href="~/Bootstrap/bootstrap-grid.css" rel="stylesheet" />
+<link href="~/Bootstrap/bootstrap-reboot.css" rel="stylesheet" />
+<link href="~/Bootstrap/bootstrap.css" rel="stylesheet" />
+
+<script src="~/Scripts/jquery-3.1.1.js"></script>
+@{
+    
+}
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EmployeeAddition</title>
+</head>
+<body>
+    @ViewData["ExceptMessage"]
+    @using (Html.BeginForm("AddEmployee", "AdminEmployee"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Employees</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.first_name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.first_name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.first_name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.last_name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.last_name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.last_name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.gender, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="chackbox">
+                        @Html.DropDownListFor(model => model.gender,
+
+                            new List<SelectListItem>()
+                            {
+                                new SelectListItem() { Text = "Male", Value = "true" },
+                                new SelectListItem() { Text = "Female", Value = "false" }
+                            },
+                            "Select gender"
+                        )
+
+                        @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.Users, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Users, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.Emp_Id, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Emp_Id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div>
+                @Html.Hidden("Id",-1)
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.salary, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.salary, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.salary, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    
+    <div>
+        @Html.ActionLink("Back to MainPage","MainPage","HomeMVC")
+    </div>
+</body>
+</html>
